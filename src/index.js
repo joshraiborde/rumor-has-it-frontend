@@ -6,6 +6,10 @@ postForm.addEventListener("submit", submitPost)
 
 function submitPost() {
     event.preventDefault()
+}
+ 
+// render post to dom
+function renderPost(){
     const li = document.createElement('li') // contains the info from the post and comment form.
 
     const p = document.createElement('p')

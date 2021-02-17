@@ -2,6 +2,7 @@ const postForm = document.getElementById("post-form")
 const postInput = document.getElementById("post-input")
 const postList = document.getElementById("post-list")
 const postURL= `http://localhost:3000/posts`
+const commentURL= `http://localhost:3000/comments`
 
 
 function fetchPosts(){
@@ -31,17 +32,17 @@ function submitPost() {
 }
  
 // render post to dom
-function renderPost(){
+function renderPost(post){
     const li = document.createElement('li') // contains the info from the post and comment form.
 
     const p = document.createElement('p')
-    p.innerText = postInput.value
+    p.innerText = post
     
 
     // comment form element
     const commentForm = document.createElement('form')
     commentForm.innerHTML += `<input type="text" id="comment-input"><input type="submit">`
-    commentForm.addEventListener("submit", submitComment)
+    commentForm.addEventListener("submit", renderComment)
 
     const commentList = document.createElement('ul')
 
@@ -53,7 +54,7 @@ function renderPost(){
 
 }
 
-function submitComment(e){ // using e.target can identify which form a comment goes into
+function renderComment(e){ // using e.target can identify which form a comment goes into
     e.preventDefault()
     const commentInput = e.target.children[0].value
     const commentList = e.target.nextElementSibling
@@ -62,10 +63,25 @@ function submitComment(e){ // using e.target can identify which form a comment g
     li.innerText = commentInput
     commentList.appendChild(li)
 
+    submitComment(commentInput)
+
     e.target.reset() // in the comment form, this will reset the input slot, after the submit button is clicked
 }
 
+function submitComment(comment){
+    fetch(commentURL, {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json",
+            "Accept-type": "application/json"
+        },
+        body: JSON.stringify({
+            content: comment 
+        })
+    })
+}
+
+ 
+
 fetchPosts()
 
- // stopped at 00:47:00
- // page 6, number 70

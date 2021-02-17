@@ -1,4 +1,4 @@
-class Post{
+class Post {
 
     static allPosts = []
 
@@ -19,8 +19,8 @@ class Post{
         fetch(postURL)
         .then(res => res.json())
         .then(posts => {
-            for(let post of posts) {
-                let newlist = new Post(post.data)
+            for(let post of posts){
+                let newList = new Post(post.data)
             }
             this.renderPosts()
         })
@@ -29,7 +29,7 @@ class Post{
     renderPost(){
         const li = document.createElement('li')
         li.dataset.id = this.id
-
+    
         const p = document.createElement('p')
         p.innerText = this.content
 
@@ -44,6 +44,7 @@ class Post{
         const commentList = document.createElement('ul')
         this.comments.forEach(comment => {
             let commentObj = new Comment(comment)
+
             commentObj.renderComment(commentList)
         })
 
@@ -51,36 +52,38 @@ class Post{
 
         postList.appendChild(li)
 
-        postForm.rest()
+        postForm.reset()
     }
 
     static submitPost(){
-        event.defaultPrevented()
+        event.preventDefault()
         const configObj = {
-            method: "POST",
+            method: "POST", 
             headers: {
-                "Content-type": "application/json",
-                "Accept-type": "application/json"
-            },
+                "Content-type": "application/json", 
+                "Accept": "application/json"
+            }, 
             body: JSON.stringify({
                 content: postInput.value
             })
         }
-
+    
         fetch(postURL, configObj)
         .then(res => res.json())
         .then(data => {
-            let newPost= new Post(data.data)
+            let newPost = new Post(data.data)
             newPost.renderPost()
         })
+    
     }
 
     deletePost(){
         const postId = this.parentElement.dataset.id
-
-        fetch(`${postUrl}/${postId}`, {
+    
+        fetch(`${postURL}/${postId}`, {
             method: "DELETE"
         })
+        
         this.parentElement.remove()
     }
     

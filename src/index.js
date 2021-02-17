@@ -7,3 +7,4 @@ const commentURL = `http://localhost:3000/comments`
 postForm.addEventListener("submit", Post.submitPost)
 
 Post.fetchPosts()
+

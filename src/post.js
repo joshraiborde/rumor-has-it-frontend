@@ -1,20 +1,20 @@
 class Post {
 
-    static allPosts = []
+    static allPosts = [] 
 
-    constructor(post){
+    constructor(post){ 
         this.id = post.id
         this.content = post.attributes.content
         this.comments = post.attributes.comments
         Post.allPosts.push(this)
     }
-
+// read posts
     static renderPosts(){
         for(let post of this.allPosts){
             post.renderPost()
         }
     }
-
+// read post
     static fetchPosts(){
         fetch(postURL)
         .then(res => res.json())
@@ -54,14 +54,14 @@ class Post {
 
         postForm.reset()
     }
-
+// create a post
     static submitPost(){
         event.preventDefault()
-        const configObj = {
+        const configObj = { 
             method: "POST", 
             headers: {
                 "Content-type": "application/json", 
-                "Accept": "application/json"
+                "Accept": "application/json" 
             }, 
             body: JSON.stringify({
                 content: postInput.value
@@ -69,14 +69,14 @@ class Post {
         }
     
         fetch(postURL, configObj)
-        .then(res => res.json())
+        .then(res => res.json()) 
         .then(data => {
             let newPost = new Post(data.data)
             newPost.renderPost()
         })
     
     }
-
+// delete a post
     deletePost(){
         const postId = this.parentElement.dataset.id
     
@@ -88,3 +88,5 @@ class Post {
     }
     
 }
+
+// Post.fetchPosts()
